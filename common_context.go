@@ -30,6 +30,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -51,6 +52,8 @@ func init() {
 
 // Represents runtime caller context.
 type LogContextInterface interface {
+	// Caller's goroutine id plus "TID"
+	Tid() string
 	// Caller's function name.
 	Func() string
 	// Caller's line number.
@@ -132,6 +135,8 @@ func extractCallerInfo(skip int) (*logContext, error) {
 // occurs, the returned context is an error context, which contains no paths
 // or names, but states that they can't be extracted.
 func specifyContext(skip int, custom interface{}) (LogContextInterface, error) {
+	// make sure goid and callTime is always newest
+	tid := strconv.FormatInt(runtime.Goid(), 10) + "TID"
 	callTime := time.Now()
 	if skip < 0 {
 		err := fmt.Errorf("can not skip negative stack frames")
@@ -143,6 +148,7 @@ func specifyContext(skip int, custom interface{}) (LogContextInterface, error) {
 	}
 	ctx := new(logContext)
 	*ctx = *caller
+	ctx.tid = tid
 	ctx.callTime = callTime
 	ctx.custom = custom
 	return ctx, nil
@@ -150,6 +156,7 @@ func specifyContext(skip int, custom interface{}) (LogContextInterface, error) {
 
 // Represents a normal runtime caller context.
 type logContext struct {
+	tid       string
 	funcName  string
 	line      int
 	shortPath string
@@ -161,6 +168,10 @@ type logContext struct {
 
 func (context *logContext) IsValid() bool {
 	return true
+}
+
+func (context *logContext) Tid() string {
+	return context.tid
 }
 
 func (context *logContext) Func() string {
@@ -199,6 +210,10 @@ type errorContext struct {
 
 func (errContext *errorContext) getErrorText(prefix string) string {
 	return fmt.Sprintf("%s() error: %s", prefix, errContext.err)
+}
+
+func (errContext *errorContext) Tid() string {
+	return "TID"
 }
 
 func (errContext *errorContext) IsValid() bool {

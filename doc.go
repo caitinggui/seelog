@@ -35,7 +35,7 @@ To create a logger, use one of the following constructors:
   func LoggerFromWriterWithMinLevelAndFormat
   func LoggerFromCustomReceiver (check https://github.com/cihub/seelog/wiki/Custom-receivers)
 Example:
-  import log "github.com/cihub/seelog"
+  import log "github.com/caitinggui/seelog"
 
   func main() {
       logger, err := log.LoggerFromConfigAsFile("seelog.xml")
@@ -53,7 +53,7 @@ Usage
 
 Logger created using one of the LoggerFrom* funcs can be used directly by calling one of the main log funcs.
 Example:
-  import log "github.com/cihub/seelog"
+  import log "github.com/caitinggui/seelog"
 
   func main() {
       logger, err := log.LoggerFromConfigAsFile("seelog.xml")
@@ -69,7 +69,7 @@ Having loggers as variables is convenient if you are writing your own package wi
 several loggers with different options.
 But for most standalone apps it is more convenient to use package level funcs and vars. There is a package level
 var 'Current' made for it. You can replace it with another logger using 'ReplaceLogger' and then use package level funcs:
-  import log "github.com/cihub/seelog"
+  import log "github.com/caitinggui/seelog"
 
   func main() {
       logger, err := log.LoggerFromConfigAsFile("seelog.xml")
@@ -144,7 +144,7 @@ the 'main.go' file. So, this is basically a demonstration of configuration of mo
 
   package main
 
-  import log "github.com/cihub/seelog"
+  import log "github.com/caitinggui/seelog"
 
   func main() {
       defer log.Flush()

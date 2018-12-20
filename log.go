@@ -153,7 +153,7 @@ func UseLogger(logger LoggerInterface) error {
 // used is disposed (except Default and Disabled loggers).
 //
 // Example:
-//     import log "github.com/cihub/seelog"
+//     import log "github.com/caitinggui/seelog"
 //
 //     func main() {
 //         logger, err := log.LoggerFromConfigAsFile("seelog.xml")

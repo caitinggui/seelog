@@ -102,6 +102,7 @@ var formatterFuncs = map[string]FormatterFunc{
 	"r":         formatterr,
 	"n":         formattern,
 	"t":         formattert,
+	"Tid":       formatterTid, // trace id
 }
 
 var formatterFuncsParameterized = map[string]FormatterFuncCreator{
@@ -395,6 +396,10 @@ func formatterRelFile(message string, level LogLevel, context LogContextInterfac
 
 func FormatterFunction(message string, level LogLevel, context LogContextInterface) interface{} {
 	return context.Func()
+}
+
+func formatterTid(message string, level LogLevel, context LogContextInterface) interface{} {
+	return context.Tid()
 }
 
 func FormatterFunctionShort(message string, level LogLevel, context LogContextInterface) interface{} {

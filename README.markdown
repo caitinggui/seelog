@@ -1,6 +1,10 @@
 Seelog
 =======
 
+# Fork from [cihub/seelog](https://github.com/cihub/seelog)
+Add `Tid` formatter for trace goroutine. When use this project, you should add `Goid` function to golang runtime, and
+rebuild golang. You can refer to [caitinggui/golang](https://github.com/caitinggui/go/commit/f1c92db9ba346939f294e71c94fa26445924fbf9)
+
 Seelog is a powerful and easy-to-learn logging framework that provides functionality for flexible dispatching, filtering, and formatting log messages.
 It is natively written in the [Go](http://golang.org/) programming language. 
 
@@ -32,7 +36,7 @@ Quick-start
 ```go
 package main
 
-import log "github.com/cihub/seelog"
+import log "github.com/caitinggui/seelog"
 
 func main() {
     defer log.Flush()
@@ -47,7 +51,7 @@ If you don't have the Go development environment installed, visit the
 [Getting Started](http://golang.org/doc/install.html) document and follow the instructions. Once you're ready, execute the following command:
 
 ```
-go get -u github.com/cihub/seelog
+go get -u github.com/caitinggui/seelog
 ```
 
 *IMPORTANT*: If you are not using the latest release version of Go, check out this [wiki page](https://github.com/cihub/seelog/wiki/Notes-on-'go-get')
@@ -65,7 +69,7 @@ Seelog examples can be found here: [seelog-examples](https://github.com/cihub/se
 Issues
 ---------------
 
-Feel free to push issues that could make Seelog better: https://github.com/cihub/seelog/issues
+Feel free to push issues that could make Seelog better: https://github.com/caitinggui/seelog/issues
 
 Changelog
 ---------------
