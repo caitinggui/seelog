@@ -24,7 +24,7 @@ var logConfig = `
     </filter>
     <filter levels="error,critical">
       <!--maxsize单位是字节，102400大概是100k大小 过期的错误日志会被压缩保存-->
-      <rollingfile type="size" filename="logs/[%ProgramName].error" maxsize="1024" archivetype="gzip" archivepath="logs/[%ProgramName].error.bak.tar.gz" maxrolls="7"/>
+      <rollingfile type="size" filename="logs/[%ProgramName].error" maxsize="10240" archivetype="gzip" archivepath="logs/[%ProgramName].error.bak.tar.gz" maxrolls="7"/>
     </filter>
 
   </outputs>
@@ -58,6 +58,7 @@ func main() {
 		go testLogger()
 
 	}
-	time.Sleep(30000000)
-	logger.Error("hello error")
+	time.Sleep(time.Second)
+	logger.Error(logger.HideStr("hello error"))
+	logger.Info(logger.HideStr("hello info"))
 }
