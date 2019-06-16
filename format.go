@@ -39,6 +39,8 @@ const (
 	FormatterSymbol = '%'
 )
 
+const programNameAttr = "[%ProgramName]"
+
 const (
 	formatterParameterStart = '('
 	formatterParameterEnd   = ')'
