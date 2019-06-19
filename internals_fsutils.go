@@ -10,8 +10,9 @@ import (
 
 // File and directory permitions.
 const (
-	defaultFilePermissions      = 0666
-	defaultDirectoryPermissions = 0767
+	defaultFilePermissions      = 0640
+	defaultDirectoryPermissions = 0750
+	oldFilePermissions          = 0440
 )
 
 const (

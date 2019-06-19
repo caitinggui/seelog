@@ -242,6 +242,7 @@ func Criticalf(format string, params ...interface{}) error {
 	defer pkgOperationsMutex.Unlock()
 	message := newLogFormattedMessage(format, params)
 	Current.criticalWithCallDepth(staticFuncCallDepth, message)
+	panic(message.String())
 	return errors.New(message.String())
 }
 
@@ -290,6 +291,7 @@ func Critical(v ...interface{}) error {
 	defer pkgOperationsMutex.Unlock()
 	message := newLogMessage(v)
 	Current.criticalWithCallDepth(staticFuncCallDepth, message)
+	panic(message.String())
 	return errors.New(message.String())
 }
 

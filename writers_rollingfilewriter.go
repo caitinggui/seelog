@@ -366,6 +366,7 @@ func (rw *rollingFileWriter) archiveExplodedLogs(logFilename string, compression
 		// Finalize archive by swapping the buffered archive into place
 		err = os.Rename(dst.Name(), filepath.Join(rw.archivePath,
 			compressionType.rollingArchiveTypeName(logFilename, true)))
+		err = os.Chmod(filepath.Join(rw.archivePath, compressionType.rollingArchiveTypeName(logFilename, true)), oldFilePermissions)
 	}()
 
 	// archive entry
@@ -404,6 +405,8 @@ func (rw *rollingFileWriter) archiveUnexplodedLogs(compressionType compressionTy
 
 		// Finalize archive by moving the buffered archive into place
 		err = os.Rename(dst.Name(), rw.archivePath)
+		// chmod to avoid security problem
+		err = os.Chmod(rw.archivePath, oldFilePermissions)
 	}()
 
 	w := compressionType.archiver(dst, false)
@@ -535,6 +538,10 @@ func (rw *rollingFileWriter) roll() error {
 		rw.self.getNewHistoryRollFileName(history))
 
 	err = os.Rename(filepath.Join(rw.currentDirPath, rw.currentName), filepath.Join(rw.currentDirPath, newHistoryName))
+	if err != nil {
+		return err
+	}
+	err = os.Chmod(filepath.Join(rw.currentDirPath, newHistoryName), oldFilePermissions)
 	if err != nil {
 		return err
 	}
