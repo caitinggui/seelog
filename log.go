@@ -219,31 +219,31 @@ func Infof(format string, params ...interface{}) {
 }
 
 // Warnf formats message according to format specifier and writes to default logger with log level = Warn
-func Warnf(format string, params ...interface{}) error {
+func Warnf(format string, params ...interface{}) {
 	pkgOperationsMutex.Lock()
 	defer pkgOperationsMutex.Unlock()
 	message := newLogFormattedMessage(format, params)
 	Current.warnWithCallDepth(staticFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
 // Errorf formats message according to format specifier and writes to default logger with log level = Error
-func Errorf(format string, params ...interface{}) error {
+func Errorf(format string, params ...interface{}) {
 	pkgOperationsMutex.Lock()
 	defer pkgOperationsMutex.Unlock()
 	message := newLogFormattedMessage(format, params)
 	Current.errorWithCallDepth(staticFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
 // Criticalf formats message according to format specifier and writes to default logger with log level = Critical
-func Criticalf(format string, params ...interface{}) error {
+func Criticalf(format string, params ...interface{}) {
 	pkgOperationsMutex.Lock()
 	defer pkgOperationsMutex.Unlock()
 	message := newLogFormattedMessage(format, params)
 	Current.criticalWithCallDepth(staticFuncCallDepth, message)
 	panic(message.String())
-	return errors.New(message.String())
+	return
 }
 
 // Trace formats message using the default formats for its operands and writes to default logger with log level = Trace
@@ -268,31 +268,31 @@ func Info(v ...interface{}) {
 }
 
 // Warn formats message using the default formats for its operands and writes to default logger with log level = Warn
-func Warn(v ...interface{}) error {
+func Warn(v ...interface{}) {
 	pkgOperationsMutex.Lock()
 	defer pkgOperationsMutex.Unlock()
 	message := newLogMessage(v)
 	Current.warnWithCallDepth(staticFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
 // Error formats message using the default formats for its operands and writes to default logger with log level = Error
-func Error(v ...interface{}) error {
+func Error(v ...interface{}) {
 	pkgOperationsMutex.Lock()
 	defer pkgOperationsMutex.Unlock()
 	message := newLogMessage(v)
 	Current.errorWithCallDepth(staticFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
 // Critical formats message using the default formats for its operands and writes to default logger with log level = Critical
-func Critical(v ...interface{}) error {
+func Critical(v ...interface{}) {
 	pkgOperationsMutex.Lock()
 	defer pkgOperationsMutex.Unlock()
 	message := newLogMessage(v)
 	Current.criticalWithCallDepth(staticFuncCallDepth, message)
 	panic(message.String())
-	return errors.New(message.String())
+	return
 }
 
 // Flush immediately processes all currently queued messages and all currently buffered messages.

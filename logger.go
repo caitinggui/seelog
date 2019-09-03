@@ -25,7 +25,6 @@
 package seelog
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"sync"
@@ -52,15 +51,15 @@ type LoggerInterface interface {
 
 	// Warnf formats message according to format specifier
 	// and writes to log with level = Warn.
-	Warnf(format string, params ...interface{}) error
+	Warnf(format string, params ...interface{})
 
 	// Errorf formats message according to format specifier
 	// and writes to log with level = Error.
-	Errorf(format string, params ...interface{}) error
+	Errorf(format string, params ...interface{})
 
 	// Criticalf formats message according to format specifier
 	// and writes to log with level = Critical.
-	Criticalf(format string, params ...interface{}) error
+	Criticalf(format string, params ...interface{})
 
 	// Trace formats message using the default formats for its operands
 	// and writes to log with level = Trace
@@ -76,15 +75,15 @@ type LoggerInterface interface {
 
 	// Warn formats message using the default formats for its operands
 	// and writes to log with level = Warn
-	Warn(v ...interface{}) error
+	Warn(v ...interface{})
 
 	// Error formats message using the default formats for its operands
 	// and writes to log with level = Error
-	Error(v ...interface{}) error
+	Error(v ...interface{})
 
 	// Critical formats message using the default formats for its operands
 	// and writes to log with level = Critical
-	Critical(v ...interface{}) error
+	Critical(v ...interface{})
 
 	traceWithCallDepth(callDepth int, message fmt.Stringer)
 	debugWithCallDepth(callDepth int, message fmt.Stringer)
@@ -174,22 +173,22 @@ func (cLogger *commonLogger) Infof(format string, params ...interface{}) {
 	cLogger.infoWithCallDepth(loggerFuncCallDepth, newLogFormattedMessage(format, params))
 }
 
-func (cLogger *commonLogger) Warnf(format string, params ...interface{}) error {
+func (cLogger *commonLogger) Warnf(format string, params ...interface{}) {
 	message := newLogFormattedMessage(format, params)
 	cLogger.warnWithCallDepth(loggerFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
-func (cLogger *commonLogger) Errorf(format string, params ...interface{}) error {
+func (cLogger *commonLogger) Errorf(format string, params ...interface{}) {
 	message := newLogFormattedMessage(format, params)
 	cLogger.errorWithCallDepth(loggerFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
-func (cLogger *commonLogger) Criticalf(format string, params ...interface{}) error {
+func (cLogger *commonLogger) Criticalf(format string, params ...interface{}) {
 	message := newLogFormattedMessage(format, params)
 	cLogger.criticalWithCallDepth(loggerFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
 func (cLogger *commonLogger) Trace(v ...interface{}) {
@@ -204,22 +203,22 @@ func (cLogger *commonLogger) Info(v ...interface{}) {
 	cLogger.infoWithCallDepth(loggerFuncCallDepth, newLogMessage(v))
 }
 
-func (cLogger *commonLogger) Warn(v ...interface{}) error {
+func (cLogger *commonLogger) Warn(v ...interface{}) {
 	message := newLogMessage(v)
 	cLogger.warnWithCallDepth(loggerFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
-func (cLogger *commonLogger) Error(v ...interface{}) error {
+func (cLogger *commonLogger) Error(v ...interface{}) {
 	message := newLogMessage(v)
 	cLogger.errorWithCallDepth(loggerFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
-func (cLogger *commonLogger) Critical(v ...interface{}) error {
+func (cLogger *commonLogger) Critical(v ...interface{}) {
 	message := newLogMessage(v)
 	cLogger.criticalWithCallDepth(loggerFuncCallDepth, message)
-	return errors.New(message.String())
+	return
 }
 
 func (cLogger *commonLogger) SetContext(c interface{}) {
