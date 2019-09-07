@@ -84,6 +84,7 @@ func extractCallerInfo(skip int) (*logContext, error) {
 	if runtime.Callers(skip+1, stack[:]) != 1 {
 		return nil, errors.New("error  during runtime.Callers")
 	}
+	frames := runtime.CallersFrames(stack[:1])
 	pc := stack[0]
 
 	// do we have a cache entry?
@@ -95,19 +96,20 @@ func extractCallerInfo(skip int) (*logContext, error) {
 	}
 
 	// look up the details of the given caller
-	funcInfo := runtime.FuncForPC(pc)
-	if funcInfo == nil {
+	frame, _ := frames.Next()
+	fullPath := frame.File
+	line := frame.Line
+	funcName := frame.Function
+	if funcName == "" {
 		return nil, errors.New("error during runtime.FuncForPC")
 	}
 
 	var shortPath string
-	fullPath, line := funcInfo.FileLine(pc)
 	if strings.HasPrefix(fullPath, workingDir) {
 		shortPath = fullPath[len(workingDir):]
 	} else {
 		shortPath = fullPath
 	}
-	funcName := funcInfo.Name()
 	if strings.HasPrefix(funcName, workingDir) {
 		funcName = funcName[len(workingDir):]
 	}
