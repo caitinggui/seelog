@@ -235,3 +235,11 @@ func TestCustomFormatterRegistration(t *testing.T) {
 		t.Fatalf("Custom formatter: invalid output. Expected: '%s'. Got: '%s'", expected, msg)
 	}
 }
+
+func TestHideAndHash(t *testing.T) {
+	expected := "Hel*****rld(310551791)"
+	msg := HideAndHash("Hello World")
+	if msg != expected {
+		t.Fatalf("hash string error. Expected: '%s', Got: '%s'", expected, msg)
+	}
+}

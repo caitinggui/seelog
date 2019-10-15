@@ -28,6 +28,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"hash/fnv"
 	"strconv"
 	"strings"
 	"unicode"
@@ -91,6 +92,17 @@ func HideStr(s string) string {
 // add * to hide some imformation
 func Hide(s interface{}) string {
 	return HideStr(fmt.Sprintf("%v", s))
+}
+
+func hashString(s string) uint32 {
+	h := fnv.New32()
+	h.Write([]byte(s))
+	return h.Sum32()
+}
+
+// hash string and add * to id
+func HideAndHash(s string) string {
+	return fmt.Sprintf("%s(%v)", HideStr(s), hashString(s))
 }
 
 // FormatterFunc represents one formatter object that starts with '%' sign in the 'format' attribute
