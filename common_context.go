@@ -138,7 +138,7 @@ func extractCallerInfo(skip int) (*logContext, error) {
 // or names, but states that they can't be extracted.
 func specifyContext(skip int, custom interface{}) (LogContextInterface, error) {
 	// make sure goid and callTime is always newest
-	tid := strconv.FormatInt(runtime.Goid(), 10) + "TID"
+	tid := strconv.FormatInt(Goid(), 10) + "TID"
 	callTime := time.Now()
 	if skip < 0 {
 		err := fmt.Errorf("can not skip negative stack frames")
